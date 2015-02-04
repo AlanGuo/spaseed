@@ -1,4 +1,4 @@
-define('spaseed/main/datamanager', function(require, exports, module) {
+define(function(require, exports, module) {
 
 	var spaseedConfig = require('spaseedConfig');
 	var cache = {};

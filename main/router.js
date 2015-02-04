@@ -1,5 +1,5 @@
 
-define('spaseed/main/router', function(require, exports, module) {
+define(function(require, exports, module) {
   var dataManager = require('../lib/datamanager');
   var docMode = document.documentMode;
   var oldIE = (/msie [\w.]+/.test(navigator.userAgent.toLowerCase()) && (!docMode || docMode <= 7));

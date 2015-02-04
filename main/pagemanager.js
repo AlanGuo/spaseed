@@ -1,6 +1,6 @@
 
-define('spaseed/main/pagemanager', function(require, exports, module) {
-	var $ = require('../lib/zepto');
+define(function(require, exports, module) {
+	var $ = require('zepto');
 	var router = require('./router');
 	var util = require('../lib/util');
 	var spaseedConfig = require('../config/config');

@@ -1,6 +1,6 @@
 
-define(function(require, exports) {
-	var $ = require('../lib/zepto');
+define(function(require, exports, module) {
+	var $ = require('zepto');
 	var evt = require('../lib/event');
 	var util = require('../lib/util');
 	var spaseedConfig = require('../config/config');
@@ -63,5 +63,5 @@ define(function(require, exports) {
 		})
     };
 
-    exports.init = init;
+    module.exports = {init:init};
 });

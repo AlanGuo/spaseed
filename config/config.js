@@ -1,5 +1,5 @@
-define('spaseed/config/config', function(require, exports) {
-	var $ = require('../lib/zepto');
+define(function(require, exports, module) {
+	var $ = require('zepto');
 	/** 
 	 * 页面管理参数配置
 	 * @class spaseedConfig
@@ -191,5 +191,5 @@ define('spaseed/config/config', function(require, exports) {
 		 'xhrProgress':true
 	};
 
-	exports.config = config;
+	module.exports = config;
 });
