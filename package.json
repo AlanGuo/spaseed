@@ -1,6 +1,7 @@
 {
+  "family":"alan",
   "name": "spaseed",
-  "version": "1.0.4",
+  "version": "1.0.7",
   "description": "单页面框架",
   "keywords": [
     "one page",
@@ -18,17 +19,14 @@
   },
   "license": "MIT",
   "spm": {
-    "include": "relative",
+    "include": "all",
     "alias":{
-      "zepto":"lib/zepto.js"
     },
-    "main": "main/entry.js",
-    "dependencies": {
-    },
+    "main":"main/entry",
+    "dependencies": {},
     "devDependencies": {},
     "tests": "test/*-spec.js",
-    "ignore": [
-    ],
+    "ignore": ["dist"],
     "buildArgs": "--ignore jquery"
   }
 }

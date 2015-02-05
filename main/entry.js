@@ -1,15 +1,15 @@
-
 define(function(require, exports, module) {
-	var $ = require('zepto');
+	var $ = require('../lib/zepto');
 	var evt = require('../lib/event');
-	var util = require('../lib/util');
-	var spaseedConfig = require('../config/config');
 	var router = require('./router');
 	var pageManager = require('./pagemanager');
+	var spaseedConfig = require('../config.js');
 
 
 	//spaseed初始化
     var init = function (config) {
+    	//扩展config
+    	spaseedConfig = $.extend(spaseedConfig,config);
 
     	//初始化页面管理
 		pageManager.init();

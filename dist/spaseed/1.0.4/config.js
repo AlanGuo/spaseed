@@ -1,0 +1,1 @@
+define("spaseed/1.0.4/config",[],function(){});

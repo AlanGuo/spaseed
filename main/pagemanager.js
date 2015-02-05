@@ -1,10 +1,9 @@
 
 define(function(require, exports, module) {
-	var $ = require('zepto');
+	var $ = require('../lib/zepto');
 	var router = require('./router');
 	var util = require('../lib/util');
-	var spaseedConfig = require('../config/config');
-	var dataManager = require('../lib/datamanager');
+	var spaseedConfig = require('../config.js');
 
 	/** 
 	 * 页面管理
@@ -174,32 +173,16 @@ define(function(require, exports, module) {
 			var moduleArr = []; 
 
 			//检查是否存在controller模块
-			if (seajs.hasDefined[controllerId]) {
-				moduleArr.push(controllerId);
-			} else {
-				controllerId = '';
-			}
+			moduleArr.push(controllerId);
 
 			//检查是否存在action模块
 			if (action) {
-				if (!seajs.hasDefined[actionId]) {
-					_self.render404();
-					return
-				}
 				moduleArr.push(actionId);
 			} else {
 				// 未指明action，默认尝试查询index
 				var indexUri = basePath + controller + '/index/index';
-				if (seajs.hasDefined[indexUri]) {
-					moduleArr.push(indexUri);
-					action = 'index';
-				} else {
-					//未指明action，且controller也不曾定义
-					if (!controllerId) {
-						_self.render404();
-						return
-					}
-				}
+				moduleArr.push(indexUri);
+				action = 'index';
 			}
 
 			//需加载的css资源
@@ -210,7 +193,10 @@ define(function(require, exports, module) {
 
 			//获取页面模块对外接口
 			require.async(moduleArr, function(cObj, aObj) {
-				
+				if(!cObj && !aObj){
+					_self.render404();
+					return;
+				}
 				//controller未定义, 此时cObj属于一个action 
 				if (!controllerId) {
 					aObj = cObj;

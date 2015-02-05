@@ -1,12 +1,5 @@
-define(function(require, exports, module) {
-	var $ = require('zepto');
-	/** 
-	 * 页面管理参数配置
-	 * @class spaseedConfig
-	 * @static
-	 */
-	var config = {
-
+define(function(require, exports,module){
+	var spaseedConfig = {
 		/**
 		 * 页面模块基础路径
 		 * @property basePath
@@ -191,5 +184,5 @@ define(function(require, exports, module) {
 		 'xhrProgress':true
 	};
 
-	module.exports = config;
-});
+	module.exports = spaseedConfig;
+})
