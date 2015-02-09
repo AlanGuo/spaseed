@@ -3,7 +3,7 @@ define(function(require, exports, module) {
 	var $ = require('../lib/zepto');
 	var router = require('./router');
 	var util = require('../lib/util');
-	var spaseedConfig = require('../config.js');
+	var spaseedConfig = require('../config');
 
 	/** 
 	 * 页面管理
