@@ -174,15 +174,17 @@ define(function(require, exports, module) {
 
 			//检查是否存在controller模块
 			moduleArr.push(controllerId);
+			var actionRedefined = false;
 
 			//检查是否存在action模块
 			if (action) {
 				moduleArr.push(actionId);
 			} else {
-				// 未指明action，默认尝试查询index
-				var indexUri = basePath + controller + '/index/index';
+				// 未指明action，默认尝试查询controller
+				var indexUri = basePath + controller + '/' + controller;
 				moduleArr.push(indexUri);
-				action = 'index';
+				action = controller;
+				actionRedefined = true;
 			}
 
 			//需加载的css资源
@@ -210,7 +212,7 @@ define(function(require, exports, module) {
 				_self.fragment = _self.fragment.replace(/\/?\?.*/,'');
 
 				//执行action
-				if (action) {
+				if (action && !actionRedefined) {
 					_self.renderView(aObj, params);
 					_self.currentViewObj = aObj;
 					controllerId && (_self.currentCtrlObj = cObj);
