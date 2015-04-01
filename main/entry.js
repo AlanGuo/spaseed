@@ -20,7 +20,7 @@ define(function(require, exports, module) {
 			'pageManager': pageManager,
 			'routes': {
 				'/': 'loadRoot',
-				'/*controller(/*action)(/*p1)(/*p2)(/*p3)(/*p4)(/*p5)': 'loadCommon'
+				'/*controller(/*action)(/*p1)(/*p2)(/*p3)(/*p4)': 'loadCommon'
 			},
 			'extendRoutes': spaseedConfig.extendRoutes
 		});
