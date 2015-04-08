@@ -1,5 +1,4 @@
 define(function(require, exports, module) {
-	var $ = require('../lib/zepto');
 	var evt = require('../lib/event');
 	var router = require('./router');
 	var pageManager = require('./pagemanager');
@@ -9,7 +8,10 @@ define(function(require, exports, module) {
 	//spaseed初始化
     var init = function (config) {
     	//扩展config
-    	spaseedConfig = $.extend(spaseedConfig,config);
+    	config = config || {};
+    	for(var p in config){
+    		spaseedConfig[p] = config[p];
+    	}
 
     	//初始化页面管理
 		pageManager.init();
@@ -41,9 +43,9 @@ define(function(require, exports, module) {
 
 	    //记录所有请求完毕
 	    var win = window;
-	    $(win).on('load',function () {
+	    win.onload=function () {
 	   		win.isOnload = true;
-	    });
+	    };
 
 	    window.addEventListener('touchmove', function(event) {
 		   if(!pageManager.container[0].contains(event.target)) {
