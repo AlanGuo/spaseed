@@ -173,7 +173,7 @@ define(function(require, exports, module) {
 			var moduleArr = []; 
 
 			//检查是否存在controller模块
-			moduleArr.push(controllerId);
+			//moduleArr.push(controllerId);
 			var actionRedefined = false;
 
 			//检查是否存在action模块
