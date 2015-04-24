@@ -6,13 +6,7 @@ define(function(require, exports, module) {
 
 
 	//spaseed初始化
-    var init = function (config) {
-    	//扩展config
-    	config = config || {};
-    	for(var p in config){
-    		spaseedConfig[p] = config[p];
-    	}
-
+    var init = function () {
     	//初始化页面管理
 		pageManager.init();
 
