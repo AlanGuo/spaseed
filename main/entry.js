@@ -1,8 +1,8 @@
 define(function(require, exports, module) {
-	var evt = require('../lib/event');
-	var router = require('./router');
-	var pageManager = require('./pagemanager');
-	var spaseedConfig = require('../config');
+	var evt = require('event');
+	var router = require('router');
+	var pageManager = require('pagemanager');
+	var spaseedConfig = require('config');
 
 
 	//spaseed初始化

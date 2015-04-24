@@ -1,6 +1,11 @@
+  /**
+   * 路由管理
+   * @class router
+   * @static
+   */
 
+ 
 define(function(require, exports, module) {
-  var dataManager = require('../lib/datamanager');
   var docMode = document.documentMode;
   var oldIE = (/msie [\w.]+/.test(navigator.userAgent.toLowerCase()) && (!docMode || docMode <= 7));
   var pushState = window.history.pushState;
@@ -8,11 +13,6 @@ define(function(require, exports, module) {
   var urls = [];
   var count = 0;
 
-  /**
-   * 路由管理
-   * @class router
-   * @static
-   */
   var router = {
     /**
      * 初始化
@@ -70,14 +70,6 @@ define(function(require, exports, module) {
           evt = this.option['html5Mode'] ? 'popstate' : 'hashchange';
 
       var start = function () {
-
-          dataManager.set('real_url',window.location.href.split('#')[0]);
-
-          var search = window.location.search;
-
-          if(search){
-              dataManager.set('search',search);
-          }
 
           var initPath = _self.getFragment() ? _self.getFragment() : '/';
 
