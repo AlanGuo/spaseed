@@ -194,35 +194,35 @@ define(function(require, exports, module) {
 			cssReqUrl.length && require.async(cssReqUrl);	
 
 			//获取页面模块对外接口
-			require.async(moduleArr, function(cObj, aObj) {
-				if(!cObj && !aObj){
+			require.async(moduleArr, function(obj) {
+				if(!obj){
 					_self.render404();
 					return;
 				}
 				//controller未定义, 此时cObj属于一个action 
-				if (!controllerId) {
-					aObj = cObj;
-				}
+				// if (!controllerId) {
+				// 	aObj = cObj;
+				// }
 
-				//执行controller, 判断同contoller下的action切换, contoller不需要再重复执行
-				if (controllerId && (!_self.fragment || _self.fragment.indexOf('/' + controller) < 0 || !action)) {
-					_self.renderView(cObj, params);
-				} 
+				// //执行controller, 判断同contoller下的action切换, contoller不需要再重复执行
+				// if (controllerId && (!_self.fragment || _self.fragment.indexOf('/' + controller) < 0 || !action)) {
+				// 	_self.renderView(cObj, params);
+				// } 
 				_self.fragment = (router.fragment === '/') ? '/' + controller : router.fragment;
 				_self.fragment = _self.fragment.replace(/\/?\?.*/,'');
 
 				//执行action
 				if (action && !actionRedefined) {
-					_self.renderView(aObj, params);
-					_self.currentViewObj = aObj;
-					controllerId && (_self.currentCtrlObj = cObj);
+					_self.renderView(obj, params);
+					_self.currentViewObj = obj;
+					controllerId && (_self.currentCtrlObj = obj);
 				} else {
-					_self.currentViewObj = cObj;
+					_self.currentViewObj = obj;
 				}
 
 
 		  		//设置页面标题
-		  		_self.setTitle(cObj, aObj); 
+		  		_self.setTitle(obj); 
 				
 			});
 
@@ -321,12 +321,10 @@ define(function(require, exports, module) {
 		/**
 		 * 设置页面标题
 		 */
-		setTitle: function (cObj, aObj) {
-			if (aObj && aObj.title) {
-				document.title = aObj.title;
-			} else if (cObj && cObj.title) {
-				document.title = cObj.title;
-			} else {
+		setTitle: function (obj) {
+			if (obj && obj.title) {
+				document.title = obj.title;
+			}else {
 				var defaultTitle = spaseedConfig.defaultTitle;
 				if (document.title != defaultTitle) {
 					document.title = defaultTitle;
