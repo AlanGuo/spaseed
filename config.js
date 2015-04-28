@@ -152,6 +152,9 @@ define(function(require, exports,module){
 		'html404': '<h2 id="tt404" style="text-align:center;padding-top:100px;font-size:20px;line-height:1.5;color:#999">'+
 				   ' <p style="font-size:44px">404</p> 您访问的页面没有找到! </h2>',
 
+
+		'htmlError':'<section class="page-404"><div class="wrap-404" data-event="reload" style="text-align: center;margin-top: 35%;"><div class="tips">{{msg}}</div><div class="tips">轻触屏幕重新加载</div></div></section>',
+
 		/**
 		 * 请求错误默认提示文字
 		 * @property defaultReqErr
