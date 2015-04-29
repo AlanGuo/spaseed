@@ -174,7 +174,6 @@ define(function(require, exports, module) {
 
 			//检查是否存在controller模块
 			//moduleArr.push(controllerId);
-			var actionRedefined = false;
 
 			//检查是否存在action模块
 			if (action) {
@@ -184,7 +183,6 @@ define(function(require, exports, module) {
 				var indexUri = basePath + controller + '/' + controller;
 				moduleArr.push(indexUri);
 				action = controller;
-				actionRedefined = true;
 			}
 
 			//需加载的css资源
@@ -212,7 +210,7 @@ define(function(require, exports, module) {
 				_self.fragment = _self.fragment.replace(/\/?\?.*/,'');
 
 				//执行action
-				if (action && !actionRedefined) {
+				if (action) {
 					_self.renderView(obj, params);
 					_self.currentViewObj = obj;
 					controllerId && (_self.currentCtrlObj = obj);
