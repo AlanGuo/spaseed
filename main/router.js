@@ -202,13 +202,8 @@ define(function(require, exports, module) {
     },
     back:function(){
 
-        //可恶的硬编码
-        if(/detail/.test(window.location.pathname)){
-          this.navigate('/')
-        }
-        else{
-          history.back();
-        }
+
+        history.back();
         //if(count -1 >0){
         
            /*
