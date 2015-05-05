@@ -103,10 +103,16 @@ define(function(require, exports, module) {
             })
 			
 		},
-		redirect:function(controller, action, params, replacement){
+		redirect:function(controller, action, params, searchparams, replacement){
 			var pathname = arguments[0];
+			var searchstring = '';
+			params = params || [];
+			searchparams = searchparams || {};
+			for(var p in searchparams){
+				searchstring += (p+'='+searchparams[p]+'&');
+			}
 			if(arguments.length > 1){
-				pathname = [controller,action,params.join('/')].join('/');
+				pathname = [controller,action,params.join('/')].join('/')+'?'+searchstring.substring(0,searchstring.length-1);
 			}
 			this.loadUrl(pathname,replacement);
 		},
