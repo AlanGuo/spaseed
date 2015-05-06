@@ -101,8 +101,8 @@ define(function(require, exports, module) {
                     tmp = undefined;
                 }
             })
-			
 		},
+		//跳转
 		redirect:function(controller, action, params, searchparams, replacement){
 			var pathname = arguments[0];
 			var searchstring = '';
@@ -116,14 +116,43 @@ define(function(require, exports, module) {
 			}
 			this.loadUrl(pathname,replacement);
 		},
+
+		/**
+		 * 只替换部分url内容
+		 */
+		partialRedirect:function(option){
+			var pathname = location.pathname.split('/'),
+				searchArray = location.search.substring(1).split('&');
+
+				option.search = option.search || [];
+			var controller = option.controller != null ? option.controller : (pathname[0] || ''),
+				action = option.action != null ? option.action : (pathname[1] || ''),
+				param = option.param || pathname.slice(2)?pathname.slice(2).join('/'):'';
+
+			for(var i=0;i<option.search.length;i++){
+				var match = searchArray.filter(function(){
+					if(item.split('=')[0] == option.search[i].key){
+						item = item.replace(/=(.*)/i,'='+option.search[i].val);
+					}
+				});
+				if(!match || !match[0]){
+					searchArray.push(option.search[i].key+'='+option.search[i].val);
+				}
+			}
+
+			pathname = [controller,action,param].join('/')+'?'+searchArray.join('&');
+		},
+
 		reload:function(){
 			var url = router.getFragment() || '/';
 			this.loadUrl(url);
 		},
+
 		back:function(){
 			this._destroy();
 			router.back(true)
 		},
+
 		loadUrl:function(url,replacement){
 			var destroy = this._destroy();
 			replacement = replacement==null? destroy:replacement; //销毁当前页面
