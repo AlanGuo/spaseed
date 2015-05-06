@@ -112,7 +112,7 @@ define(function(require, exports, module) {
 				searchstring += (p+'='+searchparams[p]+'&');
 			}
 			if(arguments.length > 1){
-				pathname = [controller,action,params.join('/')].join('/')+'?'+searchstring.substring(0,searchstring.length-1);
+				pathname = [controller,action,params.join('/')].join('/')+searchstring?('?'+searchstring.substring(0,searchstring.length-1)):'';
 			}
 			this.loadUrl(pathname,replacement);
 		},
