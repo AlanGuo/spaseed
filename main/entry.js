@@ -47,7 +47,9 @@ define(function(require, exports, module) {
 		}, false);
 
 		pageManager.container.on('touchstart',function(event){
-			var startY = startTopScroll = deltaY = undefined,
+			var startY,
+			startTopScroll,
+			deltaY,
 			startY = event.touches[0].pageY;
 			startTopScroll = this.scrollTop;
 
