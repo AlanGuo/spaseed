@@ -46,19 +46,19 @@ define(function(require, exports, module) {
 			event.preventDefault(); }
 		}, false);
 
-		pageManager.container.on('touchstart',function(event){
-			var startY,
-			startTopScroll,
-			deltaY,
-			startY = event.touches[0].pageY;
-			startTopScroll = this.scrollTop;
+		// pageManager.container.on('touchstart',function(event){
+		// 	var startY,
+		// 	startTopScroll,
+		// 	deltaY,
+		// 	startY = event.touches[0].pageY;
+		// 	startTopScroll = this.scrollTop;
 
-			if(startTopScroll <= 0)
-				this.scrollTop = 1;
+		// 	if(startTopScroll <= 0)
+		// 		this.scrollTop = 1;
 
-			if(startTopScroll + this.offsetHeight >= this.scrollHeight)
-				this.scrollTop = this.scrollHeight - this.offsetHeight - 1;
-		})
+		// 	if(startTopScroll + this.offsetHeight >= this.scrollHeight)
+		// 		this.scrollTop = this.scrollHeight - this.offsetHeight - 1;
+		// })
     };
 
     module.exports = {init:init};
