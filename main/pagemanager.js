@@ -79,8 +79,13 @@ define(function(require, exports, module) {
 			}
 
 			cb(controller, action, params);
-
 		},
+
+		/**
+		 * 图片placeholder
+		 * @method placeholder
+		 * @param {element} container 容器
+		 */
 		placeholder:function(container){
 			container = container || this.container;
 
@@ -100,7 +105,7 @@ define(function(require, exports, module) {
                     img.attr('src',raw);
                     tmp = undefined;
                 }
-            })
+            });
 		},
 		//跳转
 		redirect:function(controller, action, params, searchparams, replacement){

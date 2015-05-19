@@ -4,44 +4,60 @@
    * @static
    */
 
- 
 define(function(require, exports, module) {
-  var docMode = document.documentMode;
-  var oldIE = (/msie [\w.]+/.test(navigator.userAgent.toLowerCase()) && (!docMode || docMode <= 7));
-  var pushState = window.history.pushState;
+
+  var config = require('config');
   
+  var win = window;
+  var pushState = win.history.pushState;
   var urls = [];
   var count = 0;
 
   var router = {
+
+    option:{
+
+      //是否使用html5 history API设置路由
+      'html5Mode': true,
+
+      //页面管理对象
+      'pageManager': {},
+
+      //路由映射对象
+      'routes': {},
+
+      //扩展路由，优先于框架内部路由routes对象
+      'extendRoutes': {},
+
+      //低端浏览器监听url变化的时间间隔
+      'interval': 50,
+
+      //低端浏览器如设置了domain, 需要传入
+      'domain': ''
+
+    },
+
+    start : function () {
+        var initPath = this.getFragment() ? this.getFragment() : '/';
+
+        if (initPath === '/index.html') {
+          initPath = '/';
+        }
+
+        //完整路径在hash环境打开则转化为锚点路径后跳转
+        if (!this.option['html5Mode'] && !/#(.*)$/.test(locationHref) && initPath !== '/') {
+          location.replace('/#' + initPath);
+          return;
+        }
+
+        this.navigate(initPath, config.silentRefresh, true);
+    },
     /**
      * 初始化
      * @param {Object} option 参数
      * @method init
      */
     init: function (option) {
-
-      this.option = {
-
-        //是否使用html5 history API设置路由
-        'html5Mode': true,
-
-        //页面管理对象
-        'pageManager': {},
-
-        //路由映射对象
-        'routes': {},
-
-        //扩展路由，优先于框架内部路由routes对象
-        'extendRoutes': {},
-
-        //低端浏览器监听url变化的时间间隔
-        'interval': 50,
-
-        //低端浏览器如设置了domain, 需要传入
-        'domain': ''
-
-      };
 
       option = option || {};
 
@@ -58,7 +74,7 @@ define(function(require, exports, module) {
 
       //支持debug模式(url加上debug后不改变页面切换逻辑,可有针对性做一些事情)
       this.debug = false;
-      var locationHref = window.location.href;
+      var locationHref = win.location.href;
       if (/\/debug_online/.test(locationHref)) {
         this.debug = '/debug_online';
       } else if (/\/debug/.test(locationHref)) {
@@ -66,69 +82,14 @@ define(function(require, exports, module) {
       }
 
       var _self = this,
-
           evt = this.option['html5Mode'] ? 'popstate' : 'hashchange';
 
-      var start = function () {
+      //其他浏览器监听popstate或hashchange
+      this.addEvent(win, evt, function (e) {
+        _self.checkUrl(e);
+      });
 
-          var initPath = _self.getFragment() ? _self.getFragment() : '/';
-
-          if (initPath === '/index.html') {
-            initPath = '/';
-          }
-
-          //完整路径在hash环境打开则转化为锚点路径后跳转
-          if (!_self.option['html5Mode'] && !/#(.*)$/.test(locationHref) && initPath !== '/') {
-            location.replace('/#' + initPath);
-            return;
-          }
-
-          _self.navigate(initPath, false, true);
-      };
-
-      if (oldIE) {
-
-        //ie8以下创建iframe模拟hashchange
-        var iframe = document.createElement('iframe');
-        iframe.tabindex = '-1';
-        if (this.option['domain']) {
-          iframe.src = 'javascript:void(function(){document.open();'+
-                       'document.domain = "' + this.option['domain'] + '";document.close();}());';
-        } else {
-          iframe.src = 'javascript:0';
-        }
-        iframe.style.display = 'none';
-
-        var _iframeOnLoad = function () {
-            iframe.onload = null;
-            iframe.detachEvent('onload', _iframeOnLoad);
-            start();
-            _self.checkUrlInterval = setInterval(function () {
-              _self.checkUrl();
-            }, _self.option['interval']);
-        };
-        if (iframe.attachEvent) {
-            iframe.attachEvent('onload', _iframeOnLoad);
-        } else {
-            iframe.onload = _iframeOnLoad;
-        }
-
-        document.body.appendChild(iframe);
-        this.iframe = iframe.contentWindow;
-       
-      } else {
-
-        //其他浏览器监听popstate或hashchange
-        this.addEvent(window, evt, function (e) {
-          _self.checkUrl(e);
-        });
-
-      }
-
-      if (!this.iframe) {
-        start();
-      }
-     
+      this.start();
     },
 
     /**
@@ -162,7 +123,7 @@ define(function(require, exports, module) {
      */
     getFragment: function () {
       var fragment, 
-          pathName = window.location.pathname+window.location.search;
+          pathName = win.location.pathname+win.location.search;
 
       if (this.option['html5Mode']) {
         fragment = pathName;
@@ -215,7 +176,7 @@ define(function(require, exports, module) {
     },
 
     /**
-     * 去除前后#
+     * 去除前后#和hash
      */
     stripHash: function (url) {
       return url.replace(/^\#+|\#+$/g, '');
@@ -238,7 +199,7 @@ define(function(require, exports, module) {
     navigate: function (url, slient, replacement) {
 
       if(!replacement){
-         count++;
+        count++;
       }
 
       var _self = this;
@@ -280,24 +241,7 @@ define(function(require, exports, module) {
       url = url.split('?')[0];
 
       _self.loadUrl(url);
-
       
-    },
-
-    /**
-     * 低端浏览器设置iframe历史
-     */
-    historySet : function(hash, historyHash) {
-        var iframeDoc = this.iframe.document;
-
-        if (hash !== historyHash) {
-          iframeDoc.open();
-          if (this.option['domain']) {
-            iframeDoc.write('<script>document.domain="' + this.option['domain'] + '"</script>');
-          }
-          iframeDoc.close();
-          this.iframe.location.hash = hash;
-        }
     },
 
     /**
@@ -395,16 +339,16 @@ define(function(require, exports, module) {
       searchMatch && (urlParam = this.queryToObj(searchMatch[0]));
 
       //优先匹配框架外部定义路由
-      /*
+      
       if (extendRoutes) {
         for (var exRule in extendRoutes) {
           if (params = _self.matchRoute(exRule, url)) {
             this.applyAction(extendRoutes[exRule], params, urlParam, null);
-            return 
+            return;
           }
         }
       }
-      */
+      
       //匹配框架内部路由规则
       for (var rule in routes) {
           if (params = _self.matchRoute(rule, url)) {

@@ -180,11 +180,28 @@ define(function(require, exports,module){
 		'additionalUrlParam': null,
 
 		/**
+		 * xhr请求进度条，需要后台字段支持
 		 * @property xhrProgress
 		 * @type boolean
 		 * @default false
 		 */
-		 'xhrProgress':true
+		 'xhrProgress':true,
+
+		/**
+		 * 禁止container以外元素的touch事件
+		 * @property disableTouchOutsideContainer
+		 * @type boolean
+		 * @default true
+		 */
+		 'disableTouchOutsideContainer': true,
+
+		 /**
+		 * 刷新的时候不replacehistory
+		 * @property silentRefresh
+		 * @type boolean
+		 * @default false
+		 */
+		 'silentRefresh':false,
 	};
 
 	module.exports = spaseedConfig;
