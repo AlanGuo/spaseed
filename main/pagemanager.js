@@ -334,7 +334,7 @@ define(function(require, exports, module) {
 			/*是不是可以在这里加入*/ 
 			//渲染后执行业务逻辑
 			if (spaseedConfig.afterRender) {
-				spaseedConfig.afterRender();
+				spaseedConfig.afterRender(obj);
 			}
 		},
 
