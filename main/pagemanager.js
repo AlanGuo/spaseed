@@ -326,6 +326,7 @@ define(function(require, exports, module) {
 		
             //debugger
 			if (obj && obj.render) {
+				obj.startTime = new Date();
 				obj.render.apply(obj, params);
 			} else {
 				this.render404();
