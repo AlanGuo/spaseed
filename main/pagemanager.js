@@ -88,7 +88,7 @@ define(function(require, exports, module) {
 		 */
 		placeholder:function(container){
 			container = container || this.container;
-
+			if(!container.find){container = $(container);}
 			container.find('img[raw]').each(function(){
                 var img = $(this);
                 var raw = img.attr('raw');
@@ -114,7 +114,7 @@ define(function(require, exports, module) {
 			params = params || [];
 			searchparams = searchparams || {};
 			for(var p in searchparams){
-				searchstring += (p+'='+searchparams[p]+'&');
+				searchstring += (p+'='+encodeURIComponent(searchparams[p])+'&');
 			}
 			if(arguments.length > 1){
 				pathname = [controller,action,params.join('/')].join('/')+(searchstring?('?'+searchstring.substring(0,searchstring.length-1)):'');
