@@ -9,7 +9,7 @@ define(function(require, exports, module){
 	pageManager.html = function(option){
 		var self = this;
 		parentHtml.call(this,option);
-		var method = pageswitcher.method[option.switchMode || spaseedConfig.switchMode];
+		var method = pageswitcher.method[option.switchMode];
 
 		if(method){
 			var $cloneWrapper = this.pageWrapper.clone();

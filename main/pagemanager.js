@@ -2,6 +2,7 @@
 define(function(require, exports, module) {
 	var $ = require('$');
 	var router = require('router');
+	var evt = require('event');
 	var util = require('util');
 	var spaseedConfig = require('config');
 
@@ -260,8 +261,17 @@ define(function(require, exports, module) {
 
 
 		  		//设置页面标题
-		  		_self.setTitle(obj); 
-				
+		  		_self.setTitle(obj);
+
+		  		//事件初始化
+				if(obj.events){
+					for(var p in obj.events){
+						for(var q in obj.events[p]){
+							evt.on(q,obj.events[p][q]);
+						}
+						evt.bindBodyEvent(p);
+					}
+				}
 			});
 
 		},

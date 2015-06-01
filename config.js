@@ -202,6 +202,14 @@ define(function(require, exports,module){
 		 * @default false
 		 */
 		 'silentRefresh':false,
+
+		 /**
+		 * 切换模式
+		 * @property html5Mode
+		 * @type boolean
+		 * @default true
+		 */
+		 'html5Mode':true
 	};
 
 	module.exports = spaseedConfig;
