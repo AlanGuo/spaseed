@@ -265,11 +265,14 @@ define(function(require, exports, module) {
 
 		  		//事件初始化
 				if(obj.events){
+					obj.__bodyhandler = obj.__bodyhandler || {};
 					for(var p in obj.events){
 						for(var q in obj.events[p]){
 							evt.on(q,obj.events[p][q]);
 						}
-						evt.bindBodyEvent(p);
+						if(!obj.__bodyhandler[p]){
+							obj.__bodyhandler[p] = evt.bindBodyEvent(p);
+						}
 					}
 				}
 			});
@@ -461,6 +464,14 @@ define(function(require, exports, module) {
 				replacement = this.currentViewObj.replacement;
 				//全局销毁
 				this.globalDestroy();
+
+				var obj = this.currentViewObj;
+				//移除上一个页面的bodyEvents
+				if(obj.events){
+					for(var p in obj.events){
+						evt.off(q);
+					}
+				}
 
 				//销毁前一个
 				var destroy = this.currentViewObj.destroy;
