@@ -22,7 +22,7 @@ define(function(require, exports, module) {
 		});
 
 		//全局点击
-		evt.addCommonEvent('click', {
+		evt.bindCommonEvent(document.body, 'click', {
 			'router': function () {
 				var url = this.getAttribute("data-href");
 				pageManager.redirect(url);
@@ -54,6 +54,8 @@ define(function(require, exports, module) {
 					event.preventDefault(); 
 				}
 			}, false);
+
+			window.addEventListener('touchstart',function(){});
 	   	}
     };
 

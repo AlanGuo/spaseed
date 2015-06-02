@@ -171,7 +171,7 @@ define(function(require, exports, module) {
 		 * @param {String} action 
 		 * @param {Array} params 
 		 */
-		loadView: function (controller, action, params) {
+		loadView: function (controller, action, params, callback) {
 			var _self = this;
 
 			//渲染前执行业务逻辑
@@ -254,6 +254,7 @@ define(function(require, exports, module) {
 				if (action) {
 					_self.renderView(obj, params);
 					_self.currentViewObj = obj;
+					obj['__callback'] = callback;
 					controllerId && (_self.currentCtrlObj = obj);
 				} else {
 					_self.currentViewObj = obj;
@@ -268,7 +269,7 @@ define(function(require, exports, module) {
 					obj.__bodyhandler = obj.__bodyhandler || {};
 					for(var p in obj.events){
 						for(var q in obj.events[p]){
-							evt.on(q,obj.events[p][q]);
+							evt.on(p,q,obj.events[p][q]);
 						}
 						if(!obj.__bodyhandler[p]){
 							obj.__bodyhandler[p] = evt.bindBodyEvent(p);
@@ -469,7 +470,7 @@ define(function(require, exports, module) {
 				//移除上一个页面的bodyEvents
 				if(obj.events){
 					for(var p in obj.events){
-						evt.off(q);
+						evt.off(p);
 					}
 				}
 
