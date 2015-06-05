@@ -14,6 +14,7 @@ seajs.config({
         'router': 'main/router',
         'entry': 'main/entry',
         'config': 'config',
+        'asyncrequest': 'lib/asyncrequest'
          
         'pageManager': 'main/pagemanager',
     }
