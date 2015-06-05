@@ -209,7 +209,15 @@ define(function(require, exports,module){
 		 * @type boolean
 		 * @default true
 		 */
-		 'html5Mode':true
+		 'html5Mode':true,
+
+		 /**
+		 * 统计id，目前支持的是baidu统计
+		 * @property statsId
+		 * @type String
+		 * @default ''
+		 */
+		 'statsId':''
 	};
 
 	module.exports = spaseedConfig;
