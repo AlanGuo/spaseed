@@ -272,7 +272,7 @@ define(function(require, exports, module) {
 							evt.on(p,q,obj.events[p][q]);
 						}
 						if(!obj.__bodyhandler[p]){
-							obj.__bodyhandler[p] = evt.bindBodyEvent(p);
+							obj.__bodyhandler[p] = evt.bindBodyEvent(obj, p);
 						}
 					}
 				}

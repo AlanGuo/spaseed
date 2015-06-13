@@ -2,7 +2,7 @@ seajs.config({
     base:'/',
     alias: {
         //spaseed
-        '$': 'lib/$',                  
+        '$': 'lib/zepto',                  
         'util': 'lib/util',
         'net': 'lib/net',
         'ck': 'lib/cookie',
