@@ -22,13 +22,13 @@ define(function(require, exports, module) {
 		});
 
 		//全局点击
-		evt.bindCommonEvent(document.body, 'click', {
-			'router': function () {
-				var url = this.getAttribute("data-href");
+		evt.bindCommonEvent(null, document.body, 'click', {
+			'router': function (target) {
+				var url = target.getAttribute("data-href");
 				pageManager.redirect(url);
 			},
-			'back':function(){
-				pageManager.back(this.getAttribute("data-href"));
+			'back':function(target){
+				pageManager.back(target.getAttribute("data-href"));
 			},
 			'reload':function(){
 				pageManager.reload();

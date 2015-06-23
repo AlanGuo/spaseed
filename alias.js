@@ -8,8 +8,13 @@ seajs.config({
         'ck': 'lib/cookie',
         'event': 'lib/event',
         'querystring':'lib/querystring',
-        'dataManager': 'lib/datamanager',
+        'datamanager': 'lib/datamanager',
         'pageswitcher':'lib/pageswitcher',
+        'model':'lib/model',
+        'requestconstructor':'lib/requestconstructor',
+        'requestmanager':'lib/requestmanager',
+        'formatcheck':'lib/formatcheck',
+        'binder':'lib/binder'
         
         'router': 'main/router',
         'entry': 'main/entry',

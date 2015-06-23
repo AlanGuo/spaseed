@@ -217,7 +217,15 @@ define(function(require, exports,module){
 		 * @type String
 		 * @default ''
 		 */
-		 'statsId':''
+		 'statsId':'',
+
+		 /**
+		 * 默认开启统计
+		 * @property defaultStats
+		 * @type boolean
+		 * @default true
+		 */
+		 'defaultStats':true
 	};
 
 	module.exports = spaseedConfig;
