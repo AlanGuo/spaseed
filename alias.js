@@ -21,6 +21,6 @@ seajs.config({
         'config': 'config',
         'asyncrequest': 'lib/asyncrequest'
          
-        'pageManager': 'main/pagemanager',
+        'pagemanager': 'main/pagemanager',
     }
 });
