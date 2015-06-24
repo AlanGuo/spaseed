@@ -28,9 +28,9 @@ define(function(require, exports, module){
 			$cloneWrapper = this.pageWrapper.clone();
 		}
 		
-		this.top = $cloneWrapper.find('#top');
-		this.bottom = $cloneWrapper.find('#bottom');
-		this.container = this.classWrapper = $cloneWrapper.find('#container');
+		this.top = $cloneWrapper.find(config.top);
+		this.bottom = $cloneWrapper.find(config.bottom);
+		this.container = this.classWrapper = $cloneWrapper.find(config.container);
 		
 		if(option.top !== undefined){
 			var defaultTopClass = config.defaultTopClass,
