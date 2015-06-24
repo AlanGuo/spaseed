@@ -14,7 +14,9 @@ seajs.config({
         'requestconstructor':'lib/requestconstructor',
         'requestmanager':'lib/requestmanager',
         'formatcheck':'lib/formatcheck',
-        'binder':'lib/binder'
+        'binder':'lib/binder',
+        'stats':'lib/stats',
+        'dialog':'lib/dialog',
         
         'router': 'main/router',
         'entry': 'main/entry',

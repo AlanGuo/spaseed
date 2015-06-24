@@ -12,17 +12,17 @@ define(function(require, exports,module){
 		 * 页面包裹选择器
 		 * @property pageWrapper
 		 * @type String
-		 * @default '#pageWrapper'
+		 * @default '#wrapper-all'
 		 */
-		'pageWrapper': '#pageWrapper',
+		'pageWrapper': '#wrapper-all',
 
 		/**
 		 * 页面内容器
 		 * @property container
 		 * @type String
-		 * @default '#container'
+		 * @default '#body-container'
 		 */
-		'container': '#container',
+		'container': '#body-container',
 
 		/**
 		 * 右侧内容容器选择器

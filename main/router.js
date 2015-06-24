@@ -38,7 +38,8 @@ define(function(require, exports, module) {
     },
 
     start : function () {
-        var initPath = this.getFragment() ? this.getFragment() : '/';
+        var frag = this.getFragment();
+        var initPath = frag ? frag : '/';
 
         if (initPath === '/index.html') {
           initPath = '/';
@@ -128,11 +129,8 @@ define(function(require, exports, module) {
           pathName = win.location.pathname+win.location.search;
 
       if (this.option['html5Mode']) {
+        //锚点在html5模式下不作处理
         fragment = pathName;
-        //如果锚点路径在html5Mode环境打开 
-        if (fragment === '/' && this.getHash()) {    
-          fragment = this.getHash();
-        }
       } else {
         fragment = this.getHash();
         //如果完整路径在hash环境打开
@@ -155,7 +153,7 @@ define(function(require, exports, module) {
         current = this.getHash(this.iframe);
       }
       if (current === this.fragment) {
-        return
+        return;
       }
 
       if(typeof e == 'object' && e.state){
