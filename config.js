@@ -16,6 +16,9 @@ define(function(require, exports,module){
 		 */
 		'pageWrapper': '#wrapper-all',
 
+		'top':'#top',
+		'bottom':'#bottom',
+
 		/**
 		 * 页面内容器
 		 * @property container
@@ -140,7 +143,7 @@ define(function(require, exports,module){
 		 * @type String
 		 * @default 'home'
 		 */
-		'root': 'home',
+		'root': 'index',
 
 		/**
 		 * css配置
