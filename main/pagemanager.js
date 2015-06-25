@@ -174,28 +174,12 @@ define(function(require, exports, module) {
 		loadView: function (controller, action, params, callback) {
 			var _self = this;
 
-			//渲染前执行业务逻辑
-			if (spaseedConfig.beforeRender) {
-				if (spaseedConfig.beforeRender(controller, action, params) === false) {
-					return
-				}
-			};
-
 			params = params || [];
 
 			/*
 			//渲染公共模版
 			this.renderLayout(controller, action, params);
 			*/
-
-			//存储主要jQuery dom对象
-
-			/**
-			 * 右侧内容容器
-			 * @property appArea
-			 * @type Object
-			 */
-			this.appArea = $(spaseedConfig.appArea);
 
 			/**
 			 * 切换页面需要更改class的容器
@@ -345,12 +329,6 @@ define(function(require, exports, module) {
 			} else {
 				this.render404();
 			}
-
-			/*是不是可以在这里加入*/ 
-			//渲染后执行业务逻辑
-			if (spaseedConfig.afterRender) {
-				spaseedConfig.afterRender(obj);
-			}
 		},
 
 		/**
@@ -359,7 +337,7 @@ define(function(require, exports, module) {
 		 */
 		render404: function () {
 			var notFound = spaseedConfig.html404;
-			var container = this.appArea.length ?  this.appArea : this.container;
+			var container = this.container;
 			container.html(notFound);
 		},
 		renderError: function (msg) {
