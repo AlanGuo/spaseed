@@ -1,30 +1,43 @@
+'use strict';
 
 define(function(require, exports, module){
-
+	var $ = require('$');
 	var pageManager = require('./pagemanager');
 	var pageswitcher = require('pageswitcher');
+	var config = require('config');
 
 	var parentHtml = pageManager.html;
 	//改写pageManager的html方法
 	pageManager.html = function(option){
 		var self = this;
-		parentHtml.call(this,option);
-		var method = pageswitcher.method[option.switchMode];
+		var method = pageswitcher.method[option.switchMode || config.switchMode];
 
-		if(method){
-			var $cloneWrapper = this.pageWrapper.clone();
-			$cloneWrapper.css(method.elemIn.cssBefore);
-    		this.pageWrapper.css(method.elemOut.cssBefore);
-    		$('body').append($cloneWrapper);
-    		$cloneWrapper.height();
-    		$cloneWrapper.css(method.elemIn.cssAfter);
-    		this.pageWrapper.css(method.elemOut.cssAfter);
+		if(!option.isRefresh && method){
+			var $oldWrapper = this.pageWrapper;
+			var $cloneWrapper = $oldWrapper.clone();
+			this.pageWrapper = $cloneWrapper;
 
-    		setTimeout(function(){
-    			self.pageWrapper.remove();
-    			self.pageWrapper = $cloneWrapper;
-    			self.pageWrapper.removeAttr('style');
-    		},method.elemIn.duration);
+			parentHtml.call(this,option);
+
+			if(!option.isRefresh && method){
+				$cloneWrapper.css($.extend({},method.elemIn.cssBefore,option.switchStyle));
+	    		$oldWrapper.css(method.elemOut.cssBefore);
+
+	    		$(config.switchWrapper).append($cloneWrapper);
+
+	    		$cloneWrapper.height();
+
+	    		$cloneWrapper.css(method.elemIn.cssAfter);
+	    		$oldWrapper.css(method.elemOut.cssAfter);
+
+	    		setTimeout(function(){
+	    			$cloneWrapper.removeAttr('style');
+	    			$oldWrapper.remove();
+	    		},method.elemIn.duration);
+			}
+		}
+		else{
+			parentHtml.call(this,option);
 		}
 	}
 	pageManager.pageswitcher = pageswitcher;

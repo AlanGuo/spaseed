@@ -24,34 +24,26 @@ define(function(require, exports, module) {
 			 * @type Object
 			 */
 			this.pageWrapper = $(spaseedConfig.pageWrapper);
-
-			/**
-			 * 页面主容器，这里应该移出框架逻辑
-			 * @property container
-			 * @type Object
-			 */
-			this.container = $(spaseedConfig.container);
 		},	
 
 
 		/**
 		 * 加载首页
 		 */
-		loadRoot: function () {
-			this.loadView(spaseedConfig.root);
+		loadRoot: function (options) {
+			this.loadView({controller:spaseedConfig.root,isRefresh:options.isRefresh});
 		},
 
 		/**
 		 * 统一加载视图方法
 		 */
-		loadCommon: function () {
+		loadCommon: function (options) {
 			var _self = this,
-				arr = [].slice.call(arguments);
-
+				arr = [].slice.call(options.params);
 			//解析路由匹配
 			this.parseMatch(arr, function (controller, action, params) {
 				//处理路由, 加载视图
-				_self.loadView(controller, action, params);
+				_self.loadView({controller:controller, action:action, params:params,isRefresh:options.isRefresh});
 			})
 		},
 
@@ -88,7 +80,7 @@ define(function(require, exports, module) {
 		 * @param {element} container 容器
 		 */
 		placeholder:function(container){
-			container = container || this.container;
+			container = container || this.pageWrapper;
 			if(!container.find){container = $(container);}
 			container.find('img[raw]').each(function(){
                 var img = $(this);
@@ -162,7 +154,7 @@ define(function(require, exports, module) {
 		loadUrl:function(url,replacement){
 			var destroy = this._destroy();
 			replacement = replacement==null? destroy:replacement; //销毁当前页面
-			router.navigate(url,false,replacement);
+			router.navigate({url:url,silent:false,replacement:replacement});
 		},
 		/**
 		 * 统一路由处理函数
@@ -171,15 +163,16 @@ define(function(require, exports, module) {
 		 * @param {String} action 
 		 * @param {Array} params 
 		 */
-		loadView: function (controller, action, params, callback) {
+		loadView: function (options) {
+			var controller = options.controller, 
+				action = options.action, 
+				params = options.params, 
+				callback = options.callback,
+				isRefresh = options.isRefresh;
+
 			var _self = this;
 
 			params = params || [];
-
-			/*
-			//渲染公共模版
-			this.renderLayout(controller, action, params);
-			*/
 
 			/**
 			 * 切换页面需要更改class的容器
@@ -236,7 +229,7 @@ define(function(require, exports, module) {
 
 				//执行action
 				if (action) {
-					_self.renderView(obj, params);
+					_self.renderView(obj, params, isRefresh);
 					_self.currentViewObj = obj;
 					obj['__callback'] = callback;
 					controllerId && (_self.currentCtrlObj = obj);
@@ -320,11 +313,13 @@ define(function(require, exports, module) {
 		/**
 		 * 渲染视图
 		 */
-		renderView: function (obj, params) {
+		renderView: function (obj, params, isRefresh) {
 		
             //debugger
 			if (obj && obj.render) {
 				obj.startTime = new Date();
+				//是否刷新
+				obj.isRefresh = isRefresh;
 				obj.render.apply(obj, params);
 			} else {
 				this.render404();
@@ -337,16 +332,18 @@ define(function(require, exports, module) {
 		 */
 		render404: function () {
 			var notFound = spaseedConfig.html404;
-			var container = this.container;
+			var container = this.pageWrapper;
 			container.html(notFound);
 		},
+
 		renderError: function (msg) {
 			var htmlError = spaseedConfig.htmlError;
-			var container = this.appArea.length ?  this.appArea : this.container;
+			var container = this.pageWrapper;
 			container.html(htmlError.replace('{{msg}}',msg));
 		},
+		
 		isEmpty:function(){
-			return this.container.html().length < 10;
+			return this.pageWrapper.html().length < 10;
 		},
 
 		/**
@@ -372,7 +369,7 @@ define(function(require, exports, module) {
 		html:function(option){
 			
             if(option.container  !== undefined ){
-            	this.container.html(option.container);
+            	this.pageWrapper.html(option.container);
             }
 
             //滚动逻辑
@@ -386,7 +383,7 @@ define(function(require, exports, module) {
 					classWrapper.attr('class', option.exclusiveClassName || className);
 				},0);
 
-            	this.container.scrollTop(option.scroll || 0);
+            	this.pageWrapper.scrollTop(option.scroll || 0);
             }
 		},
 		/**

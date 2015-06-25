@@ -53,7 +53,7 @@ define(function(require, exports, module) {
           return;
         }
 
-        this.navigate(initPath, config.silentRefresh, true);
+        this.navigate({url:initPath, silent:config.silentRefresh, replacement:true, isRefresh:true});
     },
     /**
      * 初始化
@@ -159,7 +159,7 @@ define(function(require, exports, module) {
       if(typeof e == 'object' && e.state){
           count = e.state.count - 1;
       }
-      this.navigate(current, false, true);
+      this.navigate({url:current, silent:false, replacement:true});
     },
     back:function(){
 
@@ -196,7 +196,11 @@ define(function(require, exports, module) {
      * @param {Boolean} slient 不改变地址栏
      * @param {Boolean} replacement 替换浏览器的当前会话历史(h5模式时支持)
      */
-    navigate: function (url, slient, replacement) {
+    navigate: function (options) {
+      var url = options.url, 
+          slient = options.silent, 
+          replacement = options.replacement,
+          isRefresh = options.isRefresh;
 
       if(!replacement){
         count++;
@@ -210,7 +214,8 @@ define(function(require, exports, module) {
         url = '/' + url; 
       }
       
-      if (url !== _self.fragment && !slient) {//slient为true时，只路由不改变地址栏
+      if (url !== _self.fragment && !slient) {
+        //slient为true时，只路由不改变地址栏
         if (_self.debug) {
           url = url.replace(_self.debug, '');
           url = _self.debug + url;
@@ -240,7 +245,7 @@ define(function(require, exports, module) {
 
       url = url.split('?')[0];
 
-      _self.loadUrl(url);
+      _self.loadUrl({url:url,isRefresh:isRefresh});
       
     },
 
@@ -252,7 +257,7 @@ define(function(require, exports, module) {
      * @param {Boolean} replacement 替换浏览器的当前会话历史(h5模式时支持)
      */
     redirect: function (url, slient, replacement) {
-      this.navigate(url, slient, replacement);
+      this.navigate({url:url, slient:slient, replacement:replacement});
     },
 
     /**
@@ -315,9 +320,14 @@ define(function(require, exports, module) {
     /**
      * 执行路由匹配的方法
      */
-    applyAction: function (action, params, urlParam, pointer) {
+    applyAction: function (options) {
+      var action = options.action,
+          params = options.params, 
+          urlParam = options.urlParam, 
+          pointer = options.pointer;
+
       urlParam && params.push(urlParam);
-      action && action.apply(pointer, params);
+      action && action.call(pointer, {params:params,isRefresh:options.isRefresh});
     },
 
     /**
@@ -325,7 +335,7 @@ define(function(require, exports, module) {
      * @method loadUrl
      * @param {String} url 地址
      */
-    loadUrl: function (url) {
+    loadUrl: function (options) {
       var _self = this,
           extendRoutes = _self.extendRoutes,
           routes = _self.option.routes,
@@ -334,16 +344,15 @@ define(function(require, exports, module) {
           urlParam = null,
           searchReg = /\/?\?.*/,
           searchMatch = searchReg.exec(url),
-          url = url.replace(searchReg,'');
+          url = options.url.replace(searchReg,'');
 
       searchMatch && (urlParam = this.queryToObj(searchMatch[0]));
 
       //优先匹配框架外部定义路由
-      
       if (extendRoutes) {
         for (var exRule in extendRoutes) {
           if (params = _self.matchRoute(exRule, url)) {
-            this.applyAction(extendRoutes[exRule], params, urlParam, null);
+            this.applyAction({action:extendRoutes[exRule], params:params, urlParam:urlParam, isRefresh:options.isRefresh});
             return;
           }
         }
@@ -352,7 +361,7 @@ define(function(require, exports, module) {
       //匹配框架内部路由规则
       for (var rule in routes) {
           if (params = _self.matchRoute(rule, url)) {
-            this.applyAction(pm[routes[rule]], params, urlParam, pm);
+            this.applyAction({action:pm[routes[rule]], params:params, urlParam:urlParam, pointer:pm, isRefresh:options.isRefresh});
             break;
           }
       } 

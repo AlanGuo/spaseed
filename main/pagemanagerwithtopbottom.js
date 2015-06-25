@@ -92,6 +92,7 @@ define(function(require, exports, module){
 
 	pageManager.init = function(){
 		parentInit.call(this);
+		this.container = $(config.container);
 		this.top = $(config.top);
         this.bottom = $(config.bottom);
         this.mask = $(config.mask);

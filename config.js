@@ -49,6 +49,14 @@ define(function(require, exports,module){
 		'classWrapper': '#wrapper-all',
 
 		/**
+		 * 切换页面的包裹容器
+		 * @property switchWrapper
+		 * @type String
+		 * @default '#wrapper-all'
+		 */
+		 'switchWrapper': '#wrapper-all',
+
+		/**
 		 * 切换页面需要保留的class
 		 * @property defaultClass
 		 * @type String
