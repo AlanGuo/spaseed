@@ -1,5 +1,8 @@
-define('mp.App',function(require, exports, module){
+'use strict';
 
+define(function(require, exports, module){
+	var mp = require('mp');
+	//route parse
 	function parse(url,option){
 
 		var atag,pathname,seach,params = {},view,arr;
@@ -42,9 +45,7 @@ define('mp.App',function(require, exports, module){
 
 	}
 
-
-	var Node = require('mp.Node');
-	var App = Node.extend({
+	var App = mp.Class.extend({
 		view:null,
 		cache:{},
 		history:[],
@@ -66,7 +67,7 @@ define('mp.App',function(require, exports, module){
 						
 					}
 				}
-			}.bind(this))
+			}.bind(this));
 
 			this.click('router',function(target,dataset){
 				this.loadUrl(target.getAttribute('router'),dataset)
@@ -152,7 +153,7 @@ define('mp.App',function(require, exports, module){
 						last.destroy()
 						this.removeChild(last);
 					}.bind(this))
-				}.bind(this))()
+				}.bind(this))();
 			}
 			
 			this.addChild(view);
@@ -162,7 +163,7 @@ define('mp.App',function(require, exports, module){
 			document.title = this.view.title;
 		},
 		backView:function(){
-			this.history.pop()
+			this.history.pop();
 
 			var record = this.history.pop() || ['','',''];
 			record.push('right');
@@ -178,7 +179,7 @@ define('mp.App',function(require, exports, module){
 	})
 
 	App.create = function(data){
-		return new App(data)
+		return new App(data);
 	}
 
 	module.exports = App;

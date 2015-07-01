@@ -1,8 +1,11 @@
-define('mp.Node',function(require, exports, module){
+'use strict';
+
+
+define(function(require, exports, module){
 
 	var mp = require('mp');
-	var Event = require('mp.Event');
-	var Net = require('mp.Net');
+	var Event = require('event');
+	var Net = require('net');
 
 	var Node = mp.Class.extend({
 
@@ -12,9 +15,8 @@ define('mp.Node',function(require, exports, module){
 		nodeName:'div',
 
 		ctor:function(data){
-
 			if(!data){
-				data = {}
+				data = {};
 			}
 
 			this.nodeName = data.nodeName || 'div';
@@ -22,16 +24,20 @@ define('mp.Node',function(require, exports, module){
 			this.style = data.style || {};
 			this.attribute = data.attribute || {};		
 
+			//网络
 			this.net = Net.create(this);
-			this.$event =Event.create(this);
+			
+			//事件
+			this.$event = Event.create(this);
 			this.on = this.$event.on;
 			this.off = this.$event.off;
 			this.emit = this.$event.emit;
-			this.click = this.$event.click;
-			this.scroll = this.$event.scroll;
+
+			//属性
 			for(var p in this.attribute){
 				this.$[p] = this.attribute[p];
 			}
+			//样式
 			for(var p in this.style){
 				this.$.style[p] = this.style[p];
 			}

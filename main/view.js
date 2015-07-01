@@ -1,7 +1,7 @@
 define('mp.View',function(require, exports, module){
 
-	var Node = require('mp.Node');
-	var template = require('mp.template');
+	var Node = require('node');
+	var template = require('template');
 
 	
 	var View = Node.extend({

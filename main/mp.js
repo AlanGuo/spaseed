@@ -1,4 +1,6 @@
-define('mp',function(require, exports, module){
+'use strict';
+
+define(function(require, exports, module){
 
 	var $id = (0|(Math.random()*998));
 
@@ -7,7 +9,6 @@ define('mp',function(require, exports, module){
 	 *@clas mm.Class
 	 */
 	mp.Class = function(){
-
 	}
 	/**
 	 *@method mm.Class.extend
@@ -24,6 +25,7 @@ define('mp',function(require, exports, module){
 
 			this.$id = ++$id;
 
+			//执行构造方法
 			if(this.ctor){
 				this.ctor.apply(this,arguments);
 			}
