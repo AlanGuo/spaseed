@@ -1,17 +1,16 @@
-'use strict';
-
-define(function(require, exports, module){
+define('mp',function(require, exports, module){
 
 	var $id = (0|(Math.random()*998));
 
 	var mp = {};
 	/**
-	 *@class mp.Class
+	 *@clas mm.Class
 	 */
 	mp.Class = function(){
+
 	}
 	/**
-	 *@method mp.Class.extend
+	 *@method mm.Class.extend
 	 *@param prop {Object} 原型
 	 *@static
 	 *@example
@@ -25,13 +24,14 @@ define(function(require, exports, module){
 
 			this.$id = ++$id;
 
-			//执行构造方法
 			if(this.ctor){
 				this.ctor.apply(this,arguments);
 			}
 		}
 
+		//父类的原型链
 		var $super = this.prototype;
+		//用父类的原型链创建一个新对象(复制)，用于继承
 		var prototype = Object.create($super);
 		var $superTest = /\.\$super\b/;
 
@@ -41,7 +41,9 @@ define(function(require, exports, module){
 
 		for(var name in prop){
 			var isFunc = (typeof prop[name] === "function");
+			//parent也有这个方法
             var override = (typeof $super[name] === "function");
+            //并且有呼叫parent的方法
             var hasSuperCall = $superTest.test(prop[name]);
 
             if (isFunc && override && hasSuperCall) {
@@ -49,8 +51,9 @@ define(function(require, exports, module){
                 description.value = (function (name, fn) {
                     return function () {
                         var tmp = this.$super;
+                        //父类的方法
                         this.$super = $super[name];
-
+                        //运行结果
                         var result = fn.apply(this, arguments);
                         this.$super = tmp;
 
