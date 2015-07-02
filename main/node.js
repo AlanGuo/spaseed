@@ -4,51 +4,41 @@
 define(function(require, exports, module){
 
 	var mp = require('mp');
-	var Event = require('event');
-	var Net = require('net');
 
 	var Node = mp.Class.extend({
 
-		$:null,
+		$elem:null,
 		$event:null,
 
 		nodeName:'div',
 
 		ctor:function(data){
-			if(!data){
-				data = {};
-			}
+			if(!data){data = {}}
 
 			this.nodeName = data.nodeName || 'div';
-			this.$ = data.$ || document.createElement(this.nodeName);
-			this.style = data.style || {};
-			this.attribute = data.attribute || {};		
+			this.$elem =  this.$elem || data.$elem;
+			if(!this.$elem){
+				this.isNew = true;
+				this.$elem = $(document.createElement(this.nodeName));
+			}
 
-			//网络
-			this.net = Net.create(this);
-			
-			//事件
-			this.$event = Event.create(this);
-			this.on = this.$event.on;
-			this.off = this.$event.off;
-			this.emit = this.$event.emit;
+			//其他属性
+			this.attribute = data.attribute || {};
 
 			//属性
 			for(var p in this.attribute){
-				this.$[p] = this.attribute[p];
-			}
-			//样式
-			for(var p in this.style){
-				this.$.style[p] = this.style[p];
+				this.$elem[p] = this.attribute[p];
 			}
 		},
+
 		addChild:function(child){
-			this.$.appendChild(child.$);
+			this.$elem.append(child.$elem);
 			child.parent = this;
 		},
+
 		removeChild:function(child){
 			child.parent = null;
-			this.$.removeChild(child.$);
+			child.$elem.remove();
 		}
 	})
 

@@ -1,66 +1,61 @@
-define('mp.View',function(require, exports, module){
+'use strict';
 
-	var Node = require('node');
-	var template = require('template');
-
+define(function(require, exports, module){
+	var Node = require('Node');
 	
 	var View = Node.extend({
+		/*id*/
 		_:'',
+		/*标题*/
 		title:'',
-		template:'',
+		
+		/*内部元素*/
 		elements:{},
-		ctor:function(data){
-			this.$super(data);
+
+		ctor:function(app){
+			this.$super(app);
+			
+			this.$app = app;
+			//共享网络和事件
+			this.$net = app.$net;
+			//事件
+			this.$event = app.$event;
+			this.$on = app.$event.on;
+			this.$off = app.$event.off;
+			this.$emit = app.$event.emit;
+			
+			//绑定events
+			if(this.events){
+				this.__bodyhandler = this.__bodyhandler || {};
+				for(var p in this.events){
+					for(var q in this.events[p]){
+						this.$event.on(p,q,this.events[p][q]);
+					}
+					//绑定事件
+					if(!this.__bodyhandler[p]){
+						//绑定过的事件不再绑定
+						if(!this.__bodyhandler[p]){
+							this.__bodyhandler[p] = this.$event.bindBodyEvent(this, p);
+						}
+					}
+				}
+			}
 		},
+		/*重载*/
 		render:function(){
-			if(this.template){
-				this.$.innerHTML = template(this.template,{});
-			}
-			return this;
 		},
+		/*重载*/
 		reload:function(){
-
 		},
-		slidein:function(effect,callback){
-			var element = this.$;
-			var map = {left:['translate3d(0, 0, 0)',2],right:['translate3d(0, 0, 0)',1]};
-			if(effect){
-				element.style.zIndex = map[effect][1];
-				element.clientHeight;
-				element.style.WebkitTransform = map[effect][0];
-				setTimeout(callback.bind(this),500);
-			}	
-			else{
-				callback.call(this);
-			}	
-		},
-		slideout:function(effect,callback){
-
-			var element = this.$;
-			var map = {left:['translate3d(-20%, 0, 0)',1],right:['translate3d(100%, 0, 0)',2]};
-			if(effect){
-				element.style.zIndex = map[effect][1];
-				element.style.WebkitTransform = map[effect][0];
-				setTimeout(callback.bind(this),500);
-			}	
-			else{
-				callback.call(this);
-			}
-		},
-		input:function () {
-			var selects = Array.prototype.slice.call(this.$.getElementsByTagName('select'));
-			var inputs = Array.prototype.slice.call(this.$.getElementsByTagName('input')).concat(selects);
-
-			var obj = {};
-
-			inputs.forEach(function (item) {
-				obj[item.name] = item.value; 
-			})
-
-			return obj;
-		},
+		/*重载*/
 		destroy:function(){
 			this.off();
+			//移除上一个页面的bodyEvents
+			if(this.events){
+				for(var p in this.events){
+					this.$event.off(p);
+				}
+			}
 		}
 	})
 

@@ -6,12 +6,12 @@ define(function(require, exports, module){
 
 	var mp = {};
 	/**
-	 *@clas mm.Class
+	 *@class mp.Class
 	 */
 	mp.Class = function(){
 	}
 	/**
-	 *@method mm.Class.extend
+	 *@method mp.Class.extend
 	 *@param prop {Object} 原型
 	 *@static
 	 *@example
