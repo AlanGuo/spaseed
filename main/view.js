@@ -1,28 +1,30 @@
 'use strict';
 
 define(function(require, exports, module){
-	var Node = require('Node');
+	var $ = require('$'),
+		Node = require('Node');
 	
 	var View = Node.extend({
-		/*id*/
 		_:'',
 		/*标题*/
 		title:'',
-		
 		/*内部元素*/
 		elements:{},
 
-		ctor:function(app){
-			this.$super(app);
+		$elem:$('#body-container'),
+
+		ctor:function(data){
+			this.$super(data);
 			
-			this.$app = app;
+			this.$app = data.app;
 			//共享网络和事件
-			this.$net = app.$net;
+			this.$net = this.$app.$net;
 			//事件
-			this.$event = app.$event;
-			this.$on = app.$event.on;
-			this.$off = app.$event.off;
-			this.$emit = app.$event.emit;
+			this.$event = this.$app.$event;
+			this.$on = this.$app.$event.on;
+			this.$off = this.$app.$event.off;
+			this.$emit = this.$app.$event.emit;
+			this.$router = this.$app.$router;
 			
 			//绑定events
 			if(this.events){

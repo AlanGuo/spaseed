@@ -2,20 +2,12 @@ define(function(require, exports,module){
 	var spaseedConfig = {
 
 		/**
-		 * 页面body容器
-		 * @property container
-		 * @type String
-		 * @default '#body-container'
-		 */
-		'container': '#body-container',
-
-		/**
 		 * 默认标题
 		 * @property defaultTitle
 		 * @type String
 		 * @default 'spaseed'
 		 */
-		'defaultTitle': 'spaseed',
+		'title': 'spaseed',
 
 		/**
 		 * 首页模块名
@@ -31,7 +23,7 @@ define(function(require, exports,module){
 		 * @type Object
 		 * @default {}
 		 */
-		'viewfolder':'',
+		'viewfolder':'app/script/module/',
 
 		/**
 		 * 404提示

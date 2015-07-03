@@ -55,7 +55,7 @@ define(function(require, exports, module){
 			this.view = view;
 			this.view.render();
 			//设置标题
-			document.title = this.view.title || this.config.defaultTitle;
+			document.title = this.view.title || this.config.title;
 		},
 
 		startup:function(){

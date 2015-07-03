@@ -56,7 +56,7 @@ define(function(require, exports, module){
 				var self = this;
 				require.async(obj.view,function(View){
 					if(View){ 
-						view = new View(self.$app);
+						view = new View({app:self.$app});
 
 						view._ = obj.view;
 

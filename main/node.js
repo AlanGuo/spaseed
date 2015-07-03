@@ -22,12 +22,16 @@ define(function(require, exports, module){
 				this.$elem = $(document.createElement(this.nodeName));
 			}
 
+			this.className = data.className;
+			if(this.className){
+				this.$elem.addClass(this.className);
+			}
+
 			//其他属性
 			this.attribute = data.attribute || {};
-
 			//属性
 			for(var p in this.attribute){
-				this.$elem[p] = this.attribute[p];
+				this.$elem.attr(p,this.attribute[p]);
 			}
 		},
 
