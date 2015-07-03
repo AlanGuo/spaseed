@@ -11,7 +11,7 @@ define(function(require, exports, module){
 		/*内部元素*/
 		elements:{},
 
-		$elem:$('#body-container'),
+		$elem:$('#container'),
 
 		ctor:function(data){
 			this.$super(data);
