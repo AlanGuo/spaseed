@@ -1,5 +1,7 @@
+'use strict';
+
 define(function(require, exports,module){
-	var spaseedConfig = {
+	var config = {
 
 		/**
 		 * 默认标题
@@ -9,13 +11,15 @@ define(function(require, exports,module){
 		 */
 		'title': 'spaseed',
 
+		'mask':'#mask',
+
 		/**
 		 * 首页模块名
 		 * @property root
 		 * @type String
 		 * @default 'home'
 		 */
-		'root': 'index',
+		'root': '/index',
 
 		/**
 		 * 视图目录
@@ -23,7 +27,7 @@ define(function(require, exports,module){
 		 * @type Object
 		 * @default {}
 		 */
-		'viewfolder':'app/script/module/',
+		'viewfolder':'app/script/module',
 
 		/**
 		 * 404提示
@@ -33,10 +37,7 @@ define(function(require, exports,module){
 				   ' <p style="font-size:44px">404</p> 您访问的页面没有找到! </h2>'
 		 */
 		'html404': '<h2 id="tt404" style="text-align:center;padding-top:100px;font-size:20px;line-height:1.5;color:#999">'+
-				   ' <p style="font-size:44px">404</p> 您访问的页面没有找到! </h2>',
-
-
-		'htmlError':'<section class="page-404"><div class="wrap-404" data-click-event="reload" style="text-align: center;margin-top: 35%;"><div class="tips">{{msg}}</div><div class="tips">轻触屏幕重新加载</div></div></section>',
+				   ' <p style="font-size:44px">404</p> 您访问的页面没有找到</h2>',
 
 		/**
 		 * 请求错误默认提示文字
@@ -79,5 +80,5 @@ define(function(require, exports,module){
 		 'defaultStats':true
 	};
 
-	module.exports = spaseedConfig;
+	module.exports = config;
 })

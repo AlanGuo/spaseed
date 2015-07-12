@@ -1,4 +1,4 @@
-define('mp',function(require, exports, module){
+define(function(require, exports, module){
 
 	var $id = (0|(Math.random()*998));
 

@@ -5,7 +5,7 @@ define(function(require, exports, module){
 		Event = require('Event'),
 		$ = require('$'),
 		Net = require('Net'),
-		Router = require('Router');
+		Router = require('AppRouter');
 
 	var App = Node.extend({
 		view:null,
@@ -49,6 +49,9 @@ define(function(require, exports, module){
 		},
 
 		loadView:function(view){
+			if(this.view){
+				this.view.destroy();
+			}
 			if(this.isNew){
 				this.addChild(view);
 			}

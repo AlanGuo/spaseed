@@ -3,7 +3,8 @@
 
 define(function(require, exports, module){
 
-	var mp = require('mp');
+	var $ = require('$'),
+		mp = require('mp');
 
 	var Node = mp.Class.extend({
 
