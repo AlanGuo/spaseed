@@ -5,6 +5,7 @@ define(function(require, exports, module){
 		mp = require('mp');
 
 	var Router = mp.Class.extend({
+		view:null,
 		history:[],
 		historyIndex:0,
 		ctor:function(app){
@@ -34,12 +35,12 @@ define(function(require, exports, module){
 				option.effect = effect;
 			}
 
-			var obj = this.parse.call(this,url,option),view;
+			var obj = this._parse.call(this,url,option),view;
 
 			//当前view修改参数，不重新渲染，执行view的reload方法
 			//_ 记录了当前view的id
-			if(this.$app.view && this.$app.view._ === obj.view){
-				view = this.$app.view;
+			if(this.view && this.view._ === obj.view){
+				view = this.view;
 				view.params = obj.params;
 				view.reload();
 			}
@@ -51,7 +52,7 @@ define(function(require, exports, module){
 						view = new View({$app:self.$app});
 						view._ = obj.view;
 						view.params = obj.params;
-						self.$app.loadView(view);
+						self.loadView(view);
 						self.push(url,option,view);
 					}
 					else{
@@ -65,14 +66,31 @@ define(function(require, exports, module){
 			this.$app.$elem.html(this.$app.config.html404);
 		},
 
-		backView:function(record){
+		back:function(record){
 			var record = this.pop();
 			if(record){
 				this.loadUrl.apply(this,record);
 			}
 		},
 
-		parse:function(url, option){
+		addChild:function(view){
+			this.$super(view);
+		},
+
+		loadView:function(view){
+			if(this.view){
+				this.view.destroy();
+			}
+			if(this.isNew){
+				this.addChild(view);
+			}
+			this.view = view;
+			this.view.render();
+			//设置标题
+			document.title = this.view.title || this.$app.config.title;
+		},
+
+		_parse:function(url, option){
 			var atag,pathname,search,params = {},view,arr,pair,filename;
 			atag = document.createElement('a');
 			atag.href = url;
@@ -111,7 +129,7 @@ define(function(require, exports, module){
 		/*重载*/
 		pop:function(){},
 		/*重载*/
-		startup:function(){}
+		launch:function(){}
 	});
 
 	Router.create = function(app){

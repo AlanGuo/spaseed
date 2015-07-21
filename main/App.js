@@ -8,7 +8,6 @@ define(function(require, exports, module){
 		Router = require('AppRouter');
 
 	var App = Node.extend({
-		view:null,
 		cache:{},
 		config:{root:'/index'},
 
@@ -44,25 +43,8 @@ define(function(require, exports, module){
 			this.__bodyhandler.click = this.$event.bindEvent(this, this.$elem, 'click');
 		},
 
-		addChild:function(view){
-			this.$super(view);
-		},
-
-		loadView:function(view){
-			if(this.view){
-				this.view.destroy();
-			}
-			if(this.isNew){
-				this.addChild(view);
-			}
-			this.view = view;
-			this.view.render();
-			//设置标题
-			document.title = this.view.title || this.config.title;
-		},
-
-		startup:function(){
-			this.$router.startup();
+		launch:function(){
+			this.$router.launch();
 		}
 	});
 
