@@ -36,7 +36,7 @@ define(function(require, exports, module){
 				}
 			});
 			this.$event.on(this,'click','back',function(){
-				self.$router.backView();
+				self.$router.back();
 			});
 			this.__bodyhandler = {};
 			//绑定click事件
