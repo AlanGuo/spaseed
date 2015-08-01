@@ -14,8 +14,13 @@ define(function(require, exports, module){
 		events:{
 			'click':{
 				'select':function(target){
+<<<<<<< HEAD
 					this.$elem.find(this.data.itemtype || 'li').removeClass('active');
 					$(target).addClass('active');
+=======
+					this.$elem.find(this.data.itemtype || 'li').removeClass('cur');
+					$(target).addClass('cur');
+>>>>>>> origin/master
 				}
 			}
 		}

@@ -1,3 +1,5 @@
+'use strict';
+
 define(function(require, exports, module){
 
 	var $id = (0|(Math.random()*998));

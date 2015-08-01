@@ -13,8 +13,7 @@ define(function(require, exports, module){
 		},
 
 		/*重载*/
-		init:function(){
-		},
+		init:function(){},
 
 		loadUrl:function(url,option,cacheHtml,effect){
 			//数据校验

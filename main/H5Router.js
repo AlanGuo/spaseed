@@ -44,7 +44,7 @@ define(function(require, exports, module){
 
 			return record;
 		},
-		startup:function(){
+		launch:function(){
 			this.loadUrl(window.location.href);
 		}
 	});
