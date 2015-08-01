@@ -19,6 +19,10 @@ define(function(require, exports, module){
 			//first time load
 			var newHash = location.hash.substring(1);
 			self.loadUrl(newHash);
+		},
+
+		pop:function(){
+			history.go(-1);
 		}
 	});
 
