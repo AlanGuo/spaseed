@@ -14,16 +14,7 @@ var HashRouter = Router.extend({
 		window.addEventListener('hashchange',function(e){
 			var newHash = location.hash.substring(1);
 			self.loadUrl(newHash);
-<<<<<<< HEAD
 		});
-=======
-		},
-
-		pop:function(){
-			history.go(-1);
-		}
-	});
->>>>>>> origin/master
 
 		//first time load
 		var newHash = location.hash.substring(1);
