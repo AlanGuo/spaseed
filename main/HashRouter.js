@@ -1,30 +1,29 @@
 'use strict';
 
-define(function(require, exports, module){
-	var Router = require('Router');
 
-	var HashRouter = Router.extend({
+var Router = require('Router');
 
-		ctor:function(app){
-			this.$app = app;
-		},
+var HashRouter = Router.extend({
 
-		init:function(){
-			var self = this;
-			window.addEventListener('hashchange',function(e){
-				var newHash = location.hash.substring(1);
-				self.loadUrl(newHash);
-			});
+	ctor:function(app){
+		this.$app = app;
+	},
 
-			//first time load
+	init:function(){
+		var self = this;
+		window.addEventListener('hashchange',function(e){
 			var newHash = location.hash.substring(1);
 			self.loadUrl(newHash);
-		}
-	});
+		});
 
-	HashRouter.create = function(app){
-		return new HashRouter(app);
+		//first time load
+		var newHash = location.hash.substring(1);
+		self.loadUrl(newHash);
 	}
+});
 
-	module.exports = HashRouter;
-})
+HashRouter.create = function(app){
+	return new HashRouter(app);
+}
+
+module.exports = HashRouter;
