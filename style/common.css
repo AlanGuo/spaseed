@@ -112,11 +112,12 @@
 /* -- 错误提示 -- */
 .layout-err-tips{
   text-align: center;
-  height:2rem;
-  line-height: 2rem;
+  padding: 1rem;
   background-color:rgba(234, 49, 49, .7);
   color:#fff;
   position: absolute;
+  /*top:0;*/
+  left:0;
   width:100%;
   z-index: 10;
   opacity: 1;
