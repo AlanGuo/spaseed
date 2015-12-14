@@ -23,9 +23,6 @@ var App = Node.extend({
 		this.$off = this.$event.off;
 		this.$emit = this.$event.emit;
 
-		//会控制app跳转
-		this.$router.init();
-
 		//router事件
 		var self = this;
 		this.$event.on(this,'click','router',function(target){

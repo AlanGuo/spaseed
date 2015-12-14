@@ -127,7 +127,10 @@ var Router = mp.Class.extend({
 	/*重载*/
 	pop:function(){},
 	/*重载*/
-	launch:function(){}
+	launch:function(){
+		//会控制app跳转
+		this.init();
+	}
 });
 
 Router.create = function(app){
