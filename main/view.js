@@ -21,6 +21,7 @@ var View = Node.extend({
 		this.$elem = data.$elem || this.$elem;
 		//共享网络和事件
 		this.$net = this.$app.$net;
+		this.$net.caller = this;
 		//事件
 		this.$event = this.$app.$event;
 		this.$on = this.$app.$event.on;
